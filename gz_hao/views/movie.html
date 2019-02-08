@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/dplayer/1.24.0/DPlayer.min.css" rel="stylesheet">
+    <title>硅谷电影预告片</title>
+    <style>
+        .container{
+            padding:0;
+        }
+        .btn.my-sm-0{
+            color: #ffffff;
+            border:1px solid #ffffff;
+        }
+        .card-title{
+            font-weight: bold;
+        }
+        .btn.btn-link{
+            text-decoration: none;
+            color: #212529;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">硅谷电影预告片</a>
+    <form class="form-inline my-2 my-lg-0">
+        <button class="btn btn-outline-success my-sm-0" type="submit">Search</button>
+    </form>
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card-group">
+                <div class="accordion" id="accordionExample">
+                   <div class="card">
+                        <img class="card-img-top" src="http://pktchwzvh.bkt.clouddn.com/-5o_i9Ixxl.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">大微商</h5>
+                            <p class="card-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;《大微商》为国内首部描写微商创业经历电影，将视角聚焦创业影片从未涉及领域——微商产业。影片中，职业微商者不为人知传奇经历、微商人的艰辛创业历程等故事内容，有望开创国产励志片新标杆。<br>影片讲述在大众创业、草根创业新浪潮中，青年企业家梁田通过自主创业，逐渐成为中国著名微商企业领导者，实现梦想的故事。<br>除梁田成为大微商创业经历，影片聚焦中国微商产业从无到有历程，颠覆以往对微商认知，可以说是一代微商从业者集体回忆。电影里微商从业者与电影外微商从业者遥相呼应，都在各自领域为同一个梦想而努力奋斗。</p>
+                        </div>
+                        <div class="card-header" id="headingTwo">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed p-0" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                   点击查看电影详情
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                            <div class="card-body">
+                                <ul class="list-group">
+                                    <li class="list-group-item">导演：XXX</li>
+                                    <li class="list-group-item">主演：XXX</li>
+                                    <li class="list-group-item">评分：XXX</li>
+                                    <li class="list-group-item">类型：XXX</li>
+                                    <li class="list-group-item">上映时间：XXXc</li>
+                                    <li class="list-group-item">片长：XXX</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <small class="text-muted">1天前更新</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div id="dplayer"></div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dplayer/1.24.0/DPlayer.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        //视频播放器对象
+        let dp = null;
+
+        $('#myModal').on('hidden.bs.modal', function (e) {
+            // 暂停视频播放器
+            dp.pause();
+        })
+
+        $('.card-img-top').click(function () {
+            //模态框显示
+            $('#myModal').modal('show');
+
+            //获取视频和封面图的链接
+            const video = $(this).data('videoKey');
+            const cover = $(this).data('coverKey');
+
+            if (!dp){
+                dp = new DPlayer({
+                    container: document.getElementById('dplayer'),
+                    video: {
+                        url: video,
+                        pic: cover,
+                        thumbnails: cover
+                    },
+                    danmaku: {
+                        id: 'demo',
+                        api: 'https://api.prprpr.me/dplayer/'
+                    }
+                });
+            } else {
+                //切换到其他视频
+                dp.switchVideo({
+                    url: video,
+                    pic: cover,
+                    thumbnails: cover
+                }, {
+                    id: 'test',
+                    api: 'https://api.prprpr.me/dplayer/',
+                    maximum: 3000,
+                    user: 'DIYgod'
+                })
+            }
+
+
+        })
+    })
+</script>
+</body>
+</html>
